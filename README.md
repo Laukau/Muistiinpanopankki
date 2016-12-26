@@ -8,3 +8,10 @@ Yleisiä linkkejä:
 ## Työn aihe
 
 Toteutetaan muistiinpanopankki, johon opiskelijat voivat rekisteröidyttyään lisätä eri kursseihin liittyviä muistiinpanoja ja muokata niitä. 
+
+## Linkkejä sovellukseen
+
+* [Etusivu](http://kaurijok.users.cs.helsinki.fi/tsoham/)
+* [Kurssien listaus](http://kaurijok.users.cs.helsinki.fi/tsoham/course)
+* [Kurssin muokkaus](http://kaurijok.users.cs.helsinki.fi/tsoham/course/1/edit)
+* [Kurssin esittely](http://kaurijok.users.cs.helsinki.fi/tsoham/course/1)
