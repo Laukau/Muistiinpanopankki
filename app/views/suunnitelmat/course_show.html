@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Logiikka I</h1>
+
+<ul>
+    <li><strong>Yliopisto:</strong> Helsingin yliopisto</li>
+    <li><strong>Kurssitunnus:</strong> 57160</li>
+</ul>
+<p><a href="#" class="btn btn-default">Muokkaa</a><button class="btn btn-danger">Poista</button></p>
+
+<h2>Kurssin Logiikka I muistiinpanot:</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Aihe </th>
+            <th>Lisätty </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="#">1. luento</a></td>
+            <td>1.9.2016</td>
+            <th><button class="btn btn-danger">Poista</button></th>
+        </tr>
+        <tr>
+            <td><a href="#">2. luento</a></td>
+            <td>8.9.2016</td>
+            <th><button class="btn btn-danger">Poista</button></th>
+        </tr>
+    </tbody>
+</table>
+<p>
+    <a href="#" class="btn btn-success">Lisää muistiinpano</a>
+</p>
+{% endblock %}
