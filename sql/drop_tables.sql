@@ -1,1 +1,4 @@
--- Lisää DROP TABLE lauseet tähän tiedostoon
+DROP TABLE IF EXISTS Kurssi CASCADE;
+DROP TABLE IF EXISTS Opiskelija CASCADE;
+DROP TABLE IF EXISTS Opiskelijan_kurssi CASCADE;
+DROP TABLE IF EXISTS Muistiinpano CASCADE;
