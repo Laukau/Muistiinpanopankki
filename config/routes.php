@@ -27,3 +27,7 @@
   $routes->get('/course/:kurssitunnus/edit', function($kurssitunnus){
       CourseController::edit($kurssitunnus);
   });
+  
+  $routes->get('/login', function(){
+      HelloWorldController::login();
+  });

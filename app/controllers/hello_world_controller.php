@@ -26,4 +26,8 @@
     public static function course_edit(){
         View::make('suunnitelmat/course_edit.html');
     }
+    
+    public static function login(){
+        View::make('suunnitelmat/login.html');
+    }
   }
