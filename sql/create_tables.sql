@@ -5,7 +5,7 @@ CREATE TABLE Kurssi(
 );
 
 CREATE TABLE Opiskelija(
-    opiskelijatunnus SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nimi varchar(100) NOT NULL,
     kayttajatunnus varchar(50) NOT NULL,
     salasana varchar(50) NOT NULL
@@ -13,13 +13,13 @@ CREATE TABLE Opiskelija(
 
 CREATE TABLE Opiskelijan_kurssi(
     id SERIAL PRIMARY KEY,
-    opiskelija INTEGER REFERENCES Opiskelija(opiskelijatunnus),
+    opiskelija INTEGER REFERENCES Opiskelija(id),
     kurssi INTEGER REFERENCES Kurssi(kurssitunnus)
 );
 
 CREATE TABLE Muistiinpano(
     id SERIAL PRIMARY KEY,
-    opiskelija INTEGER REFERENCES Opiskelija(opiskelijatunnus),
+    opiskelija INTEGER REFERENCES Opiskelija(id),
     kurssi INTEGER REFERENCES Kurssi(kurssitunnus),
     aihe Varchar(200),
     osoite Varchar(512) NOT NULL,
