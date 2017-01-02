@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Käyttäjän Maija kurssit</h1>
+    
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Nimi</th>
+                <th>Yliopisto</th>
+                <th>Kurssitunnus</th>
+                <th>Viimeisin muistiinpano</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for course in courses %}
+            <tr>
+                <td><a href="{{base_path}}/course/{{course.kurssitunnus}}">{{course.nimi}}</a></td>
+                <td>{{course.yliopisto}}</td>
+                <td>{{course.kurssitunnus}}</td>
+                <td>18.10.2016</td>
+                <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.kurssitunnus}}/edit">Muokkaa</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    
+    <p><a href="#" class="btn btn-success">Lisää kurssi</a></p>
+{% endblock %}

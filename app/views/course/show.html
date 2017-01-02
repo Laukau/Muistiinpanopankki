@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{course.nimi}}</h1>
+
+<ul>
+    <li><strong>Yliopisto:</strong> {{course.yliopisto}}</li>
+    <li><strong>Kurssitunnus:</strong> {{course.kurssitunnus}}</li>
+</ul>
+<p><a href="{{base_path}}/course/{{course.kurssitunnus}}/edit" class="btn btn-default">Muokkaa</a><button class="btn btn-danger">Poista</button></p>
+
+<h2>Kurssin {{course.nimi}} muistiinpanot:</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Aihe </th>
+            <th>Lisätty </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="#">1. luento</a></td>
+            <td>1.9.2016</td>
+            <th><button class="btn btn-danger">Poista</button></th>
+        </tr>
+        <tr>
+            <td><a href="#">2. luento</a></td>
+            <td>8.9.2016</td>
+            <th><button class="btn btn-danger">Poista</button></th>
+        </tr>
+    </tbody>
+</table>
+<p>
+    <a href="#" class="btn btn-success">Lisää muistiinpano</a>
+</p>
+{% endblock %}

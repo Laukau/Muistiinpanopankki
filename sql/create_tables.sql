@@ -12,6 +12,7 @@ CREATE TABLE Opiskelija(
 );
 
 CREATE TABLE Opiskelijan_kurssi(
+    id SERIAL PRIMARY KEY,
     opiskelija INTEGER REFERENCES Opiskelija(opiskelijatunnus),
     kurssi INTEGER REFERENCES Kurssi(kurssitunnus)
 );
