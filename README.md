@@ -13,5 +13,6 @@ Toteutetaan muistiinpanopankki, johon opiskelijat voivat rekisteröidyttyään l
 
 * [Etusivu](http://kaurijok.users.cs.helsinki.fi/tsoham/)
 * [Kurssien listaus](http://kaurijok.users.cs.helsinki.fi/tsoham/course)
+* [Kurssin lisäys](http://kaurijok.users.cs.helsinki.fi/tsoham/course/new)
 * [Kurssin muokkaus](http://kaurijok.users.cs.helsinki.fi/tsoham/course/1/edit)
 * [Kurssin esittely](http://kaurijok.users.cs.helsinki.fi/tsoham/course/1)
