@@ -11,4 +11,19 @@ class CourseController extends BaseController {
         $course = Course::find($kurssitunnus);
         View::make('course/show.html', array('course' => $course));
     }
+    
+    public static function create(){
+        View::make('course/new.html');
+    }
+    
+    public static function store(){
+        $params = $_POST;
+        $course = new Course(array(
+           'nimi' => $params['nimi'],
+           'yliopisto' => $params['yliopisto']
+        ));
+        $course->save();
+        
+        Redirect::to('/course/' . $course->kurssitunnus, array('message' => 'Kurssi on lisätty luetteloon!'));
+    }
 }

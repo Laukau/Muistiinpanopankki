@@ -39,5 +39,12 @@ class Course extends BaseModel{
         }
         return null;
     }
+    
+    public function save(){
+        $query = DB::connection()->prepare('INSERT INTO Kurssi (nimi, yliopisto) VALUES (:nimi, :yliopisto) RETURNING kurssitunnus');
+        $query->execute(array('nimi' => $this->nimi, 'yliopisto' => $this->yliopisto));
+        $row = $query->fetch();
+        $this->kurssitunnus = $row['kurssitunnus'];
+    }
 }
 
