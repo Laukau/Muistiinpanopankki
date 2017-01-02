@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Muokkaa kurssia Logiikka I</h1>
+    
+    <form>
+        <div class="checkbox">
+            <label>Nimi</label>
+            <input type="text" class="form-control" value="Logiikka I">
+        </div>
+        <div class="checkbox">
+            <label>Yliopisto</label>
+            <input type="text" class="form-control" value="Helsingin yliopisto">
+        </div>
+        
+        <div class="checkbox">
+            <label>Kurssitunnus</label>
+            <input type="text" class="form-control" value="57160">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Tallenna</button>
+        </div>
+    </form>
+
+{% endblock %}

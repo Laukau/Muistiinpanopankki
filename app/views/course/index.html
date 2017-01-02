@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Käyttäjän Maija kurssit</h1>
+    <h1>Kaikki kurssit</h1>
     
     <table class="table table-striped table-bordered">
         <thead>
@@ -25,5 +25,5 @@
         </tbody>
     </table>
     
-    <p><a href="#" class="btn btn-success">Lisää kurssi</a></p>
+    <p><a href="{{base_path}}/course/new" class="btn btn-success">Lisää kurssi</a></p>
 {% endblock %}

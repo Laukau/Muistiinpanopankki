@@ -24,6 +24,6 @@
       CourseController::show($kurssitunnus);
   });
   
-  $routes->get('/course/1/edit', function(){
-    HelloWorldController::course_edit();
+  $routes->get('/course/:kurssitunnus/edit', function($kurssitunnus){
+      CourseController::edit($kurssitunnus);
   });

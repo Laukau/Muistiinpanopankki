@@ -24,9 +24,9 @@ class Course extends BaseModel{
         return $courses;
     }
     
-    public static function find($id){
-        $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE kurssitunnus = :id LIMIT 1');
-        $query->execute(array('id' => $id));
+    public static function find($kurssitunnus){
+        $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE kurssitunnus = :kurssitunnus LIMIT 1');
+        $query->execute(array('kurssitunnus' => $kurssitunnus));
         $row = $query->fetch();
         
         if($row) {
