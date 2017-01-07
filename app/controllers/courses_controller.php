@@ -7,8 +7,8 @@ class CourseController extends BaseController {
         View::make('course/index.html', array('courses' => $courses));
     }
     
-    public static function show($kurssitunnus){
-        $course = Course::find($kurssitunnus);
+    public static function show($id){
+        $course = Course::find($id);
         View::make('course/show.html', array('course' => $course));
     }
     
@@ -18,27 +18,50 @@ class CourseController extends BaseController {
 
     public static function store(){
         $params = $_POST;
-        $course = new Course(array(
-           'nimi' => $params['nimi'],
-           'yliopisto' => $params['yliopisto']
-        ));
-        $course->save();
+        $attributes = array(
+           'title' => $params['title'],
+           'university' => $params['university']
+        );
+        $course = new Course($attributes);
         
-        Redirect::to('/course/' . $course->kurssitunnus, array('message' => 'Kurssi on lisätty luetteloon!'));
+        $errors = $course->errors();
+        
+        if(count($errors) == 0){
+            $course->save();
+            Redirect::to('/course/' . $course->id, array('message' => 'Kurssi on lisätty luetteloon!'));
+        }else{
+            View::make('course/new.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
+        
     }
     
-    public static function edit($kurssitunnus){
-        $course = Course::find($kurssitunnus);
+    public static function edit($id){
+        $course = Course::find($id);
         View::make('course/edit.html', array('attributes' => $course));
     }
-    /*
-    public static function update($kurssitunnus){
+    
+    public static function update($id){
         $params = $_POST;
         $attributes = array(
-            'kurssitunnus' => $kurssitunnus,
-            'nimi' => $params['nimi'],
-            'yliopisto' => $params['yliopisto']
+            'id' => $id,
+            'title' => $params['title'],
+            'university' => $params['university']
         );
         $course = new Course($attributes); 
-    }*/
+        $errors = $course->errors();
+        
+        if(count($errors) == 0){
+            $course->update();
+            Redirect::to('/course/' . $course->id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
+        }else{
+            View::make('course/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
+    }
+    
+    public static function destroy($id){
+        $course = new Course(array('id' => $id));
+        $course->destroy();
+        
+        Redirect::to('/course', array('message' => 'Kurssi on poistettu onnistuneesti!'));
+    }
 }

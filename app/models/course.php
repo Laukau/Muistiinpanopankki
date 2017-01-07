@@ -1,39 +1,42 @@
 <?php
 
 class Course extends BaseModel{
-    public $kurssitunnus, $yliopisto, $nimi;
+    public $id, $university, $title, $description, $validators;
     
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_title', 'validate_university');
     }
     
     public static function all(){
-        $query = DB::connection()->prepare('SELECT * FROM Kurssi');
+        $query = DB::connection()->prepare('SELECT * FROM Course');
         $query->execute();
         $rows = $query->fetchAll();
         $courses = array();
         
         foreach($rows as $row){
             $courses[] = new Course(array(
-                'kurssitunnus' => $row['kurssitunnus'],
-                'yliopisto' => $row['yliopisto'],
-                'nimi' => $row['nimi']
+                'id' => $row['id'],
+                'university' => $row['university'],
+                'title' => $row['title'],
+                'description' => $row['description']
             ));
         }
         
         return $courses;
     }
     
-    public static function find($kurssitunnus){
-        $query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE kurssitunnus = :kurssitunnus LIMIT 1');
-        $query->execute(array('kurssitunnus' => $kurssitunnus));
+    public static function find($id){
+        $query = DB::connection()->prepare('SELECT * FROM Course WHERE id = :id LIMIT 1');
+        $query->execute(array('id' => $id));
         $row = $query->fetch();
         
         if($row) {
             $course = new Course(array(
-                'kurssitunnus' => $row['kurssitunnus'],
-                'yliopisto' => $row['yliopisto'],
-                'nimi' => $row['nimi']
+                'id' => $row['id'],
+                'university' => $row['university'],
+                'title' => $row['title'],
+                'description' => $row['description']
             ));
             return $course;
         }
@@ -41,10 +44,26 @@ class Course extends BaseModel{
     }
     
     public function save(){
-        $query = DB::connection()->prepare('INSERT INTO Kurssi (nimi, yliopisto) VALUES (:nimi, :yliopisto) RETURNING kurssitunnus');
-        $query->execute(array('nimi' => $this->nimi, 'yliopisto' => $this->yliopisto));
+        $query = DB::connection()->prepare('INSERT INTO Course (title, university) VALUES (:title, :university) RETURNING id');
+        $query->execute(array('title' => $this->title, 'university' => $this->university));
         $row = $query->fetch();
-        $this->kurssitunnus = $row['kurssitunnus'];
+        $this->id = $row['id'];
+    }
+    
+    public function validate_title(){
+        $errors = array();
+        if(parent::validate_string_length($this->title, 3)){
+            $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
+        }
+        return $errors;
+    }
+    
+    public function validate_university(){
+        $errors = array();
+        if(parent::validate_string_length($this->university, 2)){
+            $errors[] = 'Yliopiston nimen pituuden tulee olla vähintään kolme merkkiä!';
+        }
+        return $errors;
     }
 }
 

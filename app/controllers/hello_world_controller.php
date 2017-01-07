@@ -8,11 +8,13 @@
 
     public static function sandbox(){
       // Testaa koodiasi täällä
-      $logiikka = Course::find(1);
-      $courses = Course::all();
-      Kint::dump($logiikka);
-      Kint::dump($courses);
-      View::make('helloworld.html');
+      $logiikka = new Course(array(
+         'title' => 'logiikka',
+          'university' => 'HY'
+      ));
+      $errors = $logiikka->errors();
+      
+      Kint::dump($errors);
     }
     
     public static function course_list(){

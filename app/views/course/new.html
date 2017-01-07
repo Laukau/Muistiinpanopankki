@@ -1,16 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Lisää kurssi</h1>
+    {% if errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for error in errors %}
+              <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
     
     <form method="post" action="{{base_path}}/course">
         <div class="form-group">
             <label>Nimi</label>
-            <input type="text" name="nimi" class="form-control">
+            <input type="text" name="title" class="form-control">
         </div>
         
         <div class="form-group">
             <label>Yliopisto</label>
-            <input type="text" name="yliopisto" class="form-control">
+            <input type="text" name="university" class="form-control">
         </div>
         
         <div class="form-group">

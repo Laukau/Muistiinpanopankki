@@ -20,12 +20,12 @@
      CourseController::create(); 
   });
   
-  $routes->get('/course/:kurssitunnus', function($kurssitunnus){
-      CourseController::show($kurssitunnus);
+  $routes->get('/course/:id', function($id){
+      CourseController::show($id);
   });
   
-  $routes->get('/course/:kurssitunnus/edit', function($kurssitunnus){
-      CourseController::edit($kurssitunnus);
+  $routes->get('/course/:id/edit', function($id){
+      CourseController::edit($id);
   });
   
   $routes->get('/login', function(){

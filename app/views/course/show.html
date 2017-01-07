@@ -4,15 +4,15 @@
   {{message}}
 </div>
 
-<h1>{{course.nimi}}</h1>
+<h1>{{course.title}}</h1>
 
 <ul>
-    <li><strong>Yliopisto:</strong> {{course.yliopisto}}</li>
-    <li><strong>Kurssitunnus:</strong> {{course.kurssitunnus}}</li>
+    <li><strong>Yliopisto:</strong> {{course.university}}</li>
+    <li><strong>Kurssitunnus:</strong> {{course.id}}</li>
 </ul>
-<p><a href="{{base_path}}/course/{{course.kurssitunnus}}/edit" class="btn btn-default">Muokkaa</a><button class="btn btn-danger">Poista</button></p>
+<p><a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a><button class="btn btn-danger">Poista</button></p>
 
-<h2>Kurssin {{course.nimi}} muistiinpanot:</h2>
+<h2>Kurssin {{course.title}} muistiinpanot:</h2>
 
 <table class="table">
     <thead>

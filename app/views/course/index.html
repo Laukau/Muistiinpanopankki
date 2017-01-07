@@ -15,12 +15,12 @@
         <tbody>
           {% for course in courses %}
             <tr>
-                <td><a href="{{base_path}}/course/{{course.kurssitunnus}}">{{course.nimi}}</a></td>
-                <td>{{course.yliopisto}}</td>
-                <td>{{course.kurssitunnus}}</td>
+                <td><a href="{{base_path}}/course/{{course.id}}">{{course.title}}</a></td>
+                <td>{{course.university}}</td>
+                <td>{{course.id}}</td>
                 <td>18.10.2016</td>
-                <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.kurssitunnus}}/edit">Muokkaa</a></td>
-            </tr>
+                <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/edit">Muokkaa</a></td>
+            </tr>'id' => $row['id'],free
           {% endfor %}
         </tbody>
     </table>

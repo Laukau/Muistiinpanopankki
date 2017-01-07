@@ -1,28 +1,29 @@
-CREATE TABLE Kurssi(
-    kurssitunnus SERIAL PRIMARY KEY,
-    nimi varchar(150),
-    yliopisto varchar(150) NOT NULL
+CREATE TABLE Course(
+    id SERIAL PRIMARY KEY,
+    title varchar(150) NOT NULL,
+    university varchar(150) NOT NULL,
+    description varchar(500)
 );
 
-CREATE TABLE Opiskelija(
+CREATE TABLE Student(
     id SERIAL PRIMARY KEY,
-    nimi varchar(100) NOT NULL,
-    kayttajatunnus varchar(50) NOT NULL,
-    salasana varchar(50) NOT NULL
+    student_name varchar(100) NOT NULL,
+    username varchar(50) NOT NULL,
+    password varchar(50) NOT NULL
 );
 
-CREATE TABLE Opiskelijan_kurssi(
+CREATE TABLE Students_course(
     id SERIAL PRIMARY KEY,
-    opiskelija INTEGER REFERENCES Opiskelija(id),
-    kurssi INTEGER REFERENCES Kurssi(kurssitunnus)
+    student INTEGER REFERENCES Student(id),
+    course INTEGER REFERENCES Course(id)
 );
 
-CREATE TABLE Muistiinpano(
+CREATE TABLE Note(
     id SERIAL PRIMARY KEY,
-    opiskelija INTEGER REFERENCES Opiskelija(id),
-    kurssi INTEGER REFERENCES Kurssi(kurssitunnus),
-    aihe Varchar(200),
-    osoite Varchar(512) NOT NULL,
-    muokkauspaiva DATE,
-    julkinen boolean DEFAULT FALSE
+    student INTEGER REFERENCES Student(id),
+    course INTEGER REFERENCES Course(id),
+    subject Varchar(200) NOT NULL,
+    address Varchar(512) NOT NULL,
+    modified DATE,
+    published boolean DEFAULT FALSE
 );
