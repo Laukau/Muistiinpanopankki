@@ -50,6 +50,19 @@ class Course extends BaseModel{
         $this->id = $row['id'];
     }
     
+    public function destroy(){
+        $query = DB::connection()->prepare('DELETE FROM Course WHERE id = :id');
+        $query->execute(array('id' => $this->id));
+        $row = $query->fetch();
+    }
+    
+    public function update(){
+        $query = DB::connection()->prepare('UPDATE Course (title, university) VALUES (:title, :university) RETURNING id');
+        $query->execute(array('title' => $this->title, 'university' => $this->university));
+        $row = $query->fetch();
+        $this->id = $row['id'];
+    }
+    
     public function validate_title(){
         $errors = array();
         if(parent::validate_string_length($this->title, 3)){

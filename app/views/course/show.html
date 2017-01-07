@@ -10,7 +10,10 @@
     <li><strong>Yliopisto:</strong> {{course.university}}</li>
     <li><strong>Kurssitunnus:</strong> {{course.id}}</li>
 </ul>
-<p><a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a><button class="btn btn-danger">Poista</button></p>
+<p><a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a></p>
+<form method="post" action="{{base_path}}/course/{{course.id}}/destroy" style="display: inline-block;">
+    <button type="submit" class="btn btn-danger">Poista</button>
+</form>
 
 <h2>Kurssin {{course.title}} muistiinpanot:</h2>
 

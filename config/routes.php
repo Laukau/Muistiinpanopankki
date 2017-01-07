@@ -28,6 +28,14 @@
       CourseController::edit($id);
   });
   
+  $routes->post('/course/:id/edit', function($id){
+      CourseController::update($id);
+  });
+  
+  $routes->post('/course/:id/destroy', function($id){
+      CourseController::destroy($id);
+  });
+  
   $routes->get('/login', function(){
       HelloWorldController::login();
   });
