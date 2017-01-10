@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Kaikki kurssit</h1>
+    <h1>Käyttäjän {{user.student_name}} kurssit</h1>
     
     <table class="table table-striped table-bordered">
         <thead>
@@ -19,9 +19,7 @@
                 <td>{{course.university}}</td>
                 <td>{{course.id}}</td>
                 <td>18.10.2016</td>
-                {% if user_logged_in %}
                 <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/edit">Muokkaa</a></td>
-                {% endif %}
             </tr>
           {% endfor %}
         </tbody>

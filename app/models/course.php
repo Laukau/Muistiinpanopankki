@@ -26,6 +26,24 @@ class Course extends BaseModel{
         return $courses;
     }
     
+    public static function students_all($student_id){
+        $query = DB::connection()->prepare('SELECT * FROM Course JOIN Students_course ON Course.id = Students_course.course JOIN Student ON Students_course.student = Student.id');
+        $query->execute();
+        $rows = $query->fetchAll();
+        $courses = array();
+        
+        foreach($rows as $row){
+            $courses[] = new Course(array(
+                'id' => $row['id'],
+                'university' => $row['university'],
+                'title' => $row['title'],
+                'description' => $row['description']
+            ));
+        }
+        
+        return $courses;
+    }
+    
     public static function find($id){
         $query = DB::connection()->prepare('SELECT * FROM Course WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
@@ -57,10 +75,9 @@ class Course extends BaseModel{
     }
     
     public function update(){
-        $query = DB::connection()->prepare('UPDATE Course (title, university) VALUES (:title, :university) RETURNING id');
-        $query->execute(array('title' => $this->title, 'university' => $this->university));
+        $query = DB::connection()->prepare('UPDATE Course SET title = :title, university = :university, description = :description WHERE id = :id');
+        $query->execute(array('id' => $this->id, 'title' => $this->title, 'university' => $this->university, 'description' => $this->description));
         $row = $query->fetch();
-        $this->id = $row['id'];
     }
     
     public function validate_title(){
@@ -74,7 +91,7 @@ class Course extends BaseModel{
     public function validate_university(){
         $errors = array();
         if(parent::validate_string_length($this->university, 2)){
-            $errors[] = 'Yliopiston nimen pituuden tulee olla vähintään kolme merkkiä!';
+            $errors[] = 'Yliopiston nimen pituuden tulee olla vähintään kaksi merkkiä!';
         }
         return $errors;
     }

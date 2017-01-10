@@ -8,6 +8,7 @@
 
     public static function sandbox(){
       // Testaa koodiasi täällä
+        
       $logiikka = new Course(array(
          'title' => 'logiikka',
           'university' => 'HY'
@@ -15,6 +16,7 @@
       $errors = $logiikka->errors();
       
       Kint::dump($errors);
+         
     }
     
     public static function course_list(){

@@ -20,7 +20,8 @@ class CourseController extends BaseController {
         $params = $_POST;
         $attributes = array(
            'title' => $params['title'],
-           'university' => $params['university']
+           'university' => $params['university'],
+           'description' => $params['description']
         );
         $course = new Course($attributes);
         
@@ -45,17 +46,21 @@ class CourseController extends BaseController {
         $attributes = array(
             'id' => $id,
             'title' => $params['title'],
-            'university' => $params['university']
+            'university' => $params['university'],
+            'description' => $params['description']
         );
+        
         $course = new Course($attributes); 
         $errors = $course->errors();
         
-        if(count($errors) == 0){
+        if(count($errors) > 0){
+            View::make('course/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+        }else{
             $course->update();
             Redirect::to('/course/' . $course->id, array('message' => 'Kurssia on muokattu onnistuneesti!'));
-        }else{
-            View::make('course/edit.html', array('errors' => $errors, 'attributes' => $attributes));
         }
+        
+        
     }
     
     public static function destroy($id){
