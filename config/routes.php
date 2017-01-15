@@ -88,7 +88,7 @@
   });
   
   $routes->post('/course/:course_id/note', function($course_id){
-     NoteController::store(); 
+     NoteController::store($course_id); 
   });
   
   

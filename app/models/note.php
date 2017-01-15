@@ -102,9 +102,9 @@ class Note extends BaseModel{
     
     public function validate_subject(){
         $errors = array();
-        if(parent::validate_string_required($this->title)){
+        if(parent::validate_string_required($this->subject)){
             $errors[] = 'Otsikko ei saa olla tyhjä!';
-        }else if(parent::validate_string_length($this->title, 3)){
+        }else if(parent::validate_string_length($this->subject, 3)){
             $errors[] = 'Otsikon pituuden tulee olla vähintään kolme merkkiä!';
         }
         return $errors;
