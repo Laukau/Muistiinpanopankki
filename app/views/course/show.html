@@ -10,12 +10,17 @@
     <li><strong>Yliopisto:</strong> {{course.university}}</li>
     <li><strong>Kurssitunnus:</strong> {{course.id}}</li>
 </ul>
+
+{% if user_logged_in %}
 <p><a href="{{base_path}}/course/{{course.id}}/edit" class="btn btn-default">Muokkaa</a></p>
 <form method="post" action="{{base_path}}/course/{{course.id}}/destroy" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">Poista</button>
 </form>
+{% endif %}
 
 <h2>Kurssin {{course.title}} muistiinpanot:</h2>
+
+<p>Muistiinpanot eivät vielä toimi</p>
 
 <table class="table">
     <thead>

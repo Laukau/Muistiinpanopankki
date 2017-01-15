@@ -26,6 +26,7 @@
           {% endfor %}
         </tbody>
     </table>
-    
+    {% if user_logged_in %}
     <p><a href="{{base_path}}/course/new" class="btn btn-success">Lisää kurssi</a></p>
+    {% endif %}
 {% endblock %}

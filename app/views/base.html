@@ -41,9 +41,10 @@
             <!-- Navigaation linkit -->
             <!--<li><a href="{{base_path}}">Etusivu</a></li> -->
             <li><a href="{{base_path}}/course">Kurssit</a></li>
-            
             <li><a href="{{base_path}}/user">Käyttäjät</a></li>
-            
+            {% if user_logged_in %}
+            <li><a href="{{base_path}}/user/{{user_logged_in.id}}">Omat sivut</a></li>
+            {% endif %}
           </ul>
           {% if user_logged_in %}
             <form class="navbar-form navbar-right" method="post" action="{{base_path}}/logout">

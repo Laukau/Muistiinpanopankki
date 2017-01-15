@@ -62,7 +62,7 @@ class Course extends BaseModel{
     }
     
     public function save(){
-        $query = DB::connection()->prepare('INSERT INTO Course (title, university) VALUES (:title, :university) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO Course (title, university, description) VALUES (:title, :university, :description) RETURNING id');
         $query->execute(array('title' => $this->title, 'university' => $this->university));
         $row = $query->fetch();
         $this->id = $row['id'];
@@ -71,13 +71,11 @@ class Course extends BaseModel{
     public function destroy(){
         $query = DB::connection()->prepare('DELETE FROM Course WHERE id = :id');
         $query->execute(array('id' => $this->id));
-        $row = $query->fetch();
     }
     
     public function update(){
         $query = DB::connection()->prepare('UPDATE Course SET title = :title, university = :university, description = :description WHERE id = :id');
         $query->execute(array('id' => $this->id, 'title' => $this->title, 'university' => $this->university, 'description' => $this->description));
-        $row = $query->fetch();
     }
     
     public function validate_title(){

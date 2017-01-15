@@ -55,3 +55,24 @@
   $routes->post('/logout', function(){
       UserController::logout(); 
   });
+
+  $routes->get('/registration', function() {
+      UserController::register(); 
+  });
+  
+  $routes->post('/', function() {
+      UserController::store(); 
+  });
+  
+  $routes->get('/user/:id/edit', function($id){
+      UserController::edit($id);
+  });
+  
+  $routes->post('/user/:id/edit', function($id){
+      UserController::update($id);
+  });
+  
+  $routes->post('/user/:id/destroy', function($id){
+      UserController::destroy($id);
+  });
+  
