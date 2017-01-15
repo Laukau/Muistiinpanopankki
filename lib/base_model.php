@@ -27,8 +27,14 @@
       return $errors;
     }
     
+    public function validate_string_required($string){
+        if($string == '' || $string == null ){
+            return true;
+        }
+        return false;
+    }
     public function validate_string_length($string, $length){
-        if($string == '' || $string == null || strlen($string) <= $length){
+        if(strlen($string) < $length){
             return true;
         }
         return false;

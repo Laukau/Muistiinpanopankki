@@ -47,6 +47,16 @@ class User extends BaseModel{
         return null;
     }
     
+    public function username_exists(){
+        $query = DB::connection()->prepare('SELECT * FROM Student WHERE username = :username LIMIT 1');
+        $query->execute(array('username' => $this->username));
+        $row = $query->fetch();
+        if($row){
+            return true;
+        }
+        return false;
+    }
+    
     public function save(){
         $query = DB::connection()->prepare('INSERT INTO Student (student_name, username, password) VALUES (:student_name, :username, :password) RETURNING id');
         $query->execute(array('student_name' => $this->student_name, 'username' => $this->username, 'password' => $this->password));
@@ -82,14 +92,35 @@ class User extends BaseModel{
     }
     
     public function validate_student_name(){
-        
+        $errors = array();
+        if(parent::validate_string_required($this->student_name)){
+            $errors[] = 'Nimi ei saa olla tyhjä!';
+        }else if(parent::validate_string_length($this->student_name, 2)){
+            $errors[] = 'Nimen pituuden tulee olla vähintään kaksi merkkiä!';
+        }
+        return $errors;
     }
     
     public function validate_username(){
-        
+        $errors = array();
+        if(parent::validate_string_required($this->username)){
+            $errors[] = 'Käyttäjätunnus ei saa olla tyhjä!';
+        }else if(parent::validate_string_length($this->username, 6)){
+            $errors[] = 'Käyttäjätunnuksen pituuden tulee olla vähintään 6 merkkiä!';
+        }
+        return $errors;
     }
     
     public function validate_password(){
+        $errors = array();
         
+        if(parent::validate_string_required($this->password)){
+            $errors[] = 'Salasana ei saa olla tyhjä!';
+        }else if(parent::validate_string_length($this->password, 6)){
+            $errors[] = 'Salasanan pituuden tulee olla vähintään 6 merkkiä!';
+        } /*else if(!preg_match('/[A-Za-Z0-9]+/', $this->password)){
+            $errors[] = 'Salasanan tulee sisältää pieniä ja isoja kirjaimia sekä numeroita!';
+        }*/
+        return $errors;
     }
 }

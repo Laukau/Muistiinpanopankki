@@ -11,7 +11,7 @@ class UserController extends BaseController{
     public static function show($id){
         self::check_logged_in();
         $user = User::find($id);
-        $courses = Course::all();
+        $courses = Course::students_all($id);
         View::make('user/show.html', array('user' => $user, 'courses' => $courses));
     }
     
@@ -31,11 +31,14 @@ class UserController extends BaseController{
         $user = new User($attributes);
         $errors = $user->errors();
         
+        if($user->username_exists()){
+            $errors[] = 'Käyttäjätunnus on jo käytössä!';
+        }
         if(count($errors) == 0){
             $user->save();
-            $user = User::authenticate($params['username'], $params['password']);
-            $_SESSION['user'] = $user->id;
-            Redirect::to('/user/' . $user->id, array('message' => 'Olet rekisteröitynyt palveluun!'));
+            //$user = User::authenticate($params['username'], $params['password']);
+            //$_SESSION['user'] = $user->id;
+            Redirect::to('/login', array('message' => 'Olet rekisteröitynyt palveluun, voit nyt kirjautua sisään!'));
         } else{
             View::make('user/registration.html', array('errors' => $errors, 'attributes' => $attributes));
         }
@@ -50,7 +53,7 @@ class UserController extends BaseController{
         if($user->id === $user_logged_in->id){
             View::make('user/edit.html', array('attributes' => $user));
         }else{
-            Redirect::to('/user', array('error' => 'Et voi muokata toisen käyttäjän tietoja'));
+            Redirect::to('/user');
         }
     }
     
@@ -70,9 +73,6 @@ class UserController extends BaseController{
         $user = new User($attributes);
         $errors = $user->errors();
         
-        if($user->id !== $user_logged_in->id){
-            Redirect::to('/user', array('message' => 'Et voi muokata toisen käyttäjän tietoja!'));
-        }
         if(count($errors) == 0){
             $user->update();
             Redirect::to('/user/' . $user->id, array('message' => 'Tietoja on muokattu onnistuneesti!'));
@@ -83,16 +83,11 @@ class UserController extends BaseController{
     
     public static function destroy($id){
         self::check_logged_in();
-        
-        $user_logged_in = self::get_user_logged_in();
         $user = new User(array('id' => $id));
+        $user->destroy();
+        $_SESSION['user'] = null;
+        Redirect::to('/registration', array('message' => 'Tietosi on poistettu palvelusta!'));
         
-        if($user === $user_logged_in){
-            $user->destroy();
-            Redirect::to('/registration', array('message' => 'Tietosi on poistettu palvelusta!'));
-        }else{
-            Redirect::to('/user', array('message' => 'Et voi poistaa toisen käyttäjän tietoja'));
-        }
     }
     
     public static function login(){
@@ -105,7 +100,7 @@ class UserController extends BaseController{
         $user = User::authenticate($params['username'], $params['password']);
         
         if(!$user){
-            View::make('user/login.html', array('error' => 'Väärä käyttäjätunnus tai salasana', 'username' => $params['username']));
+            View::make('user/login.html', array('message' => 'Väärä käyttäjätunnus tai salasana', 'username' => $params['username']));
         }else{
             $_SESSION['user'] = $user->id;
             

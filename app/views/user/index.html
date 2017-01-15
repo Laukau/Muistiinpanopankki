@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+
     <h1>Kaikki käyttäjät</h1>
     
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>Nimi</th>
+                <th>Käyttäjätunnus</th>
                 <th>Muistiinpanoja lisätty</th>
                 <th></th>
             </tr>
@@ -13,7 +14,7 @@
         <tbody>
           {% for user in users %}
             <tr>
-                <td><a href="{{base_path}}/user/{{user.id}}">{{user.student_name}}</a></td>
+                <td><a href="{{base_path}}/user/{{user.id}}">{{user.username}}</a></td>
                 <td>12</td>
             </tr>
           {% endfor %}

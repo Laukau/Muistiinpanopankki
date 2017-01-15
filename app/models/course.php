@@ -61,9 +61,17 @@ class Course extends BaseModel{
         return null;
     }
     
+    public function check_course_at_uni(){
+        $query = DB::connection()->prepare('SELECT * FROM Course WHERE title = :title AND university = :university LIMIT 1');
+        $query->execute(array('title' => $this->title, 'university' => $this->university));
+        $row = $query->fetch();
+        return $row;
+    }
+
+
     public function save(){
         $query = DB::connection()->prepare('INSERT INTO Course (title, university, description) VALUES (:title, :university, :description) RETURNING id');
-        $query->execute(array('title' => $this->title, 'university' => $this->university));
+        $query->execute(array('title' => $this->title, 'university' => $this->university, 'description' => $this->description));
         $row = $query->fetch();
         $this->id = $row['id'];
     }
@@ -80,7 +88,9 @@ class Course extends BaseModel{
     
     public function validate_title(){
         $errors = array();
-        if(parent::validate_string_length($this->title, 3)){
+        if(parent::validate_string_required($this->title)){
+            $errors[] = 'Nimi ei saa olla tyhjä!';
+        }else if(parent::validate_string_length($this->title, 3)){
             $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
         }
         return $errors;
@@ -88,10 +98,13 @@ class Course extends BaseModel{
     
     public function validate_university(){
         $errors = array();
-        if(parent::validate_string_length($this->university, 2)){
+        if(parent::validate_string_required($this->university)){
+            $errors[] = 'Yliopiston nimi ei saa olla tyhjä!';
+        }else if(parent::validate_string_length($this->university, 2)){
             $errors[] = 'Yliopiston nimen pituuden tulee olla vähintään kaksi merkkiä!';
         }
         return $errors;
     }
+    
 }
 

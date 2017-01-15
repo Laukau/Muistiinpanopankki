@@ -24,6 +24,10 @@
       CourseController::show($id);
   });
   
+  $routes->post('/course/:id', function($id){
+      NoteController::index();
+  });
+  
   $routes->get('/course/:id/edit', function($id){
       CourseController::edit($id);
   });
@@ -74,5 +78,29 @@
   
   $routes->post('/user/:id/destroy', function($id){
       UserController::destroy($id);
+  });
+  
+  
+  
+  
+  $routes->get('/course/:course_id/note/new', function($course_id){
+     NoteController::create($course_id); 
+  });
+  
+  $routes->post('/course/:course_id/note', function($course_id){
+     NoteController::store(); 
+  });
+  
+  
+  $routes->get('/course/:course_id/note/:note_id/edit', function($course_id, $note_id){
+      Note_Controller::edit($note_id);
+  });
+  
+  $routes->post('/course/:course_id/note/:note_id/edit', function($course_id, $note_id){
+      NoteController::update($course_id, $note_id);
+  });
+  
+  $routes->post('/course/:course_id/note/:note_id/destroy', function($course_id, $note_id){
+      Note_Controller::destroy($note_id);
   });
   

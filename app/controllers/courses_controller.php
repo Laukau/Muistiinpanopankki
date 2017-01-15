@@ -26,7 +26,9 @@ class CourseController extends BaseController {
         $course = new Course($attributes);
         
         $errors = $course->errors();
-        
+        if($course->check_course_at_uni()){
+            $errors[] = 'Kurssi ' . $course->title . ' yliopistossa ' . $course->university . ' on jo luettelossa!';
+        }
         if(count($errors) == 0){
             $course->save();
             Redirect::to('/course/' . $course->id, array('message' => 'Kurssi on lisätty luetteloon!'));
