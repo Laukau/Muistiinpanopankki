@@ -25,7 +25,7 @@
   });
   
   $routes->post('/course/:id', function($id){
-      NoteController::index();
+      NoteController::index($id);
   });
   
   $routes->get('/course/:id/edit', function($id){
@@ -50,6 +50,10 @@
   
   $routes->get('/user', function(){
       UserController::index();
+  });
+  
+  $routes->get('/user/home', function() {
+      UserController::home();
   });
   
   $routes->get('/user/:id', function($id) {
@@ -93,7 +97,7 @@
   
   
   $routes->get('/course/:course_id/note/:note_id/edit', function($course_id, $note_id){
-      Note_Controller::edit($note_id);
+      NoteController::edit($note_id, $course_id);
   });
   
   $routes->post('/course/:course_id/note/:note_id/edit', function($course_id, $note_id){
@@ -101,6 +105,6 @@
   });
   
   $routes->post('/course/:course_id/note/:note_id/destroy', function($course_id, $note_id){
-      Note_Controller::destroy($note_id);
+      NoteController::destroy($note_id, $course_id);
   });
   

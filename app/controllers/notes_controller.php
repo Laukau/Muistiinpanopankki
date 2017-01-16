@@ -2,18 +2,19 @@
 
 class NoteController extends BaseController {
 
-    public static function index() {
+    public static function index($course_id) {
         $notes = array();
         $user_logged_in = self::get_user_logged_in();
+        $course = Course::find($course_id);
+        $params = $_POST;
+        
         if ($user_logged_in) {
-            $params = $_POST;
             $category = $params['note_category'];
             $notes = Note::all($category, $params['course_id'], $user_logged_in->id);
         }else{
             $notes = Note::all_published($params['course_id']);
         }
-        
-        View::make('note/index.html', array('notes' => $notes));
+        View::make('course/show.html', array('notes' => $notes, 'course' => $course));
     }
     
     public static function create($course_id){
@@ -38,6 +39,8 @@ class NoteController extends BaseController {
         $note = new Note($attributes);
         $errors = $note->errors();
         
+       
+        
         if(count($errors) == 0){
             $note->save();
             Redirect::to('/course/' . $course_id, array('message' => 'Muistiinpano on lisätty luetteloosi!'));
@@ -46,16 +49,19 @@ class NoteController extends BaseController {
         }
     }
     
-    public static function edit($id){
+    public static function edit($note_id, $course_id){
         self::check_logged_in();
         
         $user_logged_in = self::get_user_logged_in();
-        $note = Note::find($id);
+        $note = Note::find($note_id);
+        $user = User::find($note->student);
+        $errors = array();
         
-        if($note->student === $user_logged_in){
+        if($user->id === $user_logged_in->id){
             View::make('note/edit.html', array('attributes' => $note));
         }else{
-            Redirect::to('/course/' . $note->course, array('errors' => 'Muistiinpanoa voi muokata vain sen tehnyt opiskelija!'));
+            $errors[] = 'Muistiinpanoa voi muokata vain sen tehnyt opiskelija!';
+            Redirect::to('/course/' . $course_id, array('errors' => $errors));
         }
     }
     
@@ -90,17 +96,22 @@ class NoteController extends BaseController {
         }
     }
     
-    public static function destroy($id){
+    public static function destroy($note_id, $course_id){
          self::check_logged_in();
         
         $user_logged_in = self::get_user_logged_in();
-        $note = new Note(array('id' => $id));
+        $user = User::find(Note::find($note_id)->student);
+        $note = new Note(array('id' => $note_id));
         
-        if($note->student === $user_logged_in){
+        $errors = array();
+        
+        if($user->id === $user_logged_in->id){
             $note->destroy();
-            Redirect::to('/course/' . $note->course, array('message' => 'Muistiinpano on poistettu!'));
+            
+            Redirect::to('/course/' . $course_id, array('message' => 'Muistiinpano on poistettu!'));
         }else{
-            Redirect::to('/course' . $note->course, array('errors' => 'Muistiinpanon voi poistaa vain sen tehnyt opiskelija!'));
+            $errors[] = 'Muistiinpanon voi poistaa vain sen tehnyt opiskelija!';
+            Redirect::to('/course/' . $course_id, array('errors' => $errors));
         }
     }
 }

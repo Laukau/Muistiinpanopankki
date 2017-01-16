@@ -15,6 +15,14 @@ class UserController extends BaseController{
         View::make('user/show.html', array('user' => $user, 'courses' => $courses));
     }
     
+    public static function home(){
+        self::check_logged_in();
+        $user_logged_in = self::get_user_logged_in();
+        $courses = Course::students_all($user_logged_in->id);
+        
+        View::make('user/home.html', array('user' => $user_logged_in, 'courses' => $courses));
+    }
+    
     public static function register(){
         View::make('user/registration.html');
     }
@@ -111,5 +119,14 @@ class UserController extends BaseController{
     public static function logout(){
         $_SESSION['user'] = null;
         Redirect::to('/login', array('message' => 'Olet kirjautunut ulos!'));
+    }
+    
+    public static function add_course(){
+        self::check_logged_in();
+        View::make('/user/new_course.html');
+    }
+    
+    public static function store_course(){
+        
     }
 }

@@ -7,7 +7,6 @@
             <tr>
                 <th>Nimi</th>
                 <th>Yliopisto</th>
-                <th>Viimeisin muistiinpano</th>
                 <th></th>
             </tr>
         </thead>
@@ -16,7 +15,6 @@
             <tr>
                 <td><a href="{{base_path}}/course/{{course.id}}">{{course.title}}</a></td>
                 <td>{{course.university}}</td>
-                <td>18.10.2016</td>
                 {% if user_logged_in %}
                 <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/edit">Muokkaa</a></td>
                 {% endif %}

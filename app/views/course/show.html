@@ -2,17 +2,17 @@
 {% block content %}
 {% import "macros/forms.html" as forms %}
 <div class="alert alert-success">
-  {{message}}
+    {{message}}
 </div>
 {% if errors %}
-    <div class="alert alert-danger">
-        <ul>
-            {% for error in errors %}
-              <li>{{error}}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
 <h1>{{course.title}}</h1>
 
 <ul>
@@ -39,6 +39,9 @@
             <option value="published">Kaikki julkiset</option>
         </select>
     </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Näytä</button>
+    </div>
 </form>
 
 <p>
@@ -46,7 +49,28 @@
 </p>
 {% endif %}
 
-<div>
-    {% block notes %}{% endblock %}
-</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Aihe </th>
+            <th>Lisätty </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for note in notes %}
+            <tr>
+                <td><a href="{{note.address}}">{{note.subject}}</a></td>
+                <td>{{note.modified}}</td>
+                {% if user_logged_in %}
+                  <td><a href="{{base_path}}/course/{{course.id}}/note/{{note.id}}/edit" class="btn btn-default">Muokkaa</a><td>
+                  {{forms.destroy_button("#{base_path}/course/#{course.id}/note/#{note.id}/destroy")}}
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}

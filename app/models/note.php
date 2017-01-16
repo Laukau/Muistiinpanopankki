@@ -8,16 +8,7 @@ class Note extends BaseModel{
         $this->validators = array('validate_address', 'validate_subject');
     }
     
-    public static function all($category, $course_id, $student_id){
-        if($category == "all"){
-            return $this->all_student_and_published($course_id, $student_id);
-        } else if($category == "student"){
-            return $this->all_student($course_id, $student_id);
-        }
-        return $this->all_published($course_id);
-    }
-    
-    public static function all_helper($query){
+    public static function all_helper($rows){
         $notes = array();
         
         foreach($rows as $row){
@@ -36,25 +27,35 @@ class Note extends BaseModel{
     }
     
     public static function all_student($course_id, $student_id){
-        $query = DB::connection()->prepare('SELECT * FROM Note JOIN Course ON Note.course = Course.id JOIN Student ON Note.student = Student.id WHERE Course.id = :course_id AND Student.id = :student_id');
+        $query = DB::connection()->prepare('SELECT * FROM Note WHERE Note.course = :course_id AND Note.student = :student_id');
         $query->execute(array('course_id' => $course_id, 'student_id' => $student_id));
         $rows = $query->fetchAll();
-        return $rows;
+        return self::all_helper($rows);
     }
     
     public static function all_published($course_id){
-        $query = DB::connection()->prepare('SELECT * FROM Note JOIN Course ON Note.course = Course.id WHERE Course.id = :course_id AND Note.published = true');
+        $query = DB::connection()->prepare('SELECT * FROM Note WHERE Note.course = :course_id AND Note.published = true');
         $query->execute(array('course_id' => $course_id));
         $rows = $query->fetchAll();
-        return $rows;
+        return self::all_helper($rows);
     }
     
     public static function all_student_and_published($course_id, $student_id){
-        $query = DB::connection()->prepare('SELECT * FROM Note JOIN Course ON Note.course = Course.id JOIN Student ON Note.student = Student.id WHERE Course.id = :course_id AND (Student.id = :student_id OR Note.published = true)');
+        $query = DB::connection()->prepare('SELECT * FROM Note WHERE Note.course = :course_id AND (Note.student = :student_id OR Note.published = true)');
         $query->execute(array('course_id' => $course_id, 'student_id' => $student_id));
         $rows = $query->fetchAll();
-        return $rows;
+        return self::all_helper($rows);
     }
+    
+     public static function all($category, $course_id, $student_id){
+        if($category == "all"){
+            return self::all_student_and_published($course_id, $student_id);
+        } else if($category == "student"){
+            return self::all_student($course_id, $student_id);
+        }
+        return self::all_published($course_id);
+    }
+    
     
     
     public static function find($id){
