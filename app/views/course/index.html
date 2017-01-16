@@ -8,6 +8,7 @@
                 <th>Nimi</th>
                 <th>Yliopisto</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -17,6 +18,7 @@
                 <td>{{course.university}}</td>
                 {% if user_logged_in %}
                 <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/edit">Muokkaa</a></td>
+                <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/join">Liity kurssille</a></td>
                 {% endif %}
             </tr>
           {% endfor %}

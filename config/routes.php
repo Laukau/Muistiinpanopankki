@@ -40,6 +40,14 @@
       CourseController::destroy($id);
   });
   
+  $routes->get('/course/:id/join', function($id){
+      UserController::join_course($id);
+  });
+  
+  $routes->post('/course/:id/leave', function($id){
+      UserController::leave_course($id);
+  });
+  
   $routes->get('/login', function(){
       UserController::login();
   });

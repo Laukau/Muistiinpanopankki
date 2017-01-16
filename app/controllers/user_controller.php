@@ -121,12 +121,18 @@ class UserController extends BaseController{
         Redirect::to('/login', array('message' => 'Olet kirjautunut ulos!'));
     }
     
-    public static function add_course(){
+    public static function join_course($course_id){
         self::check_logged_in();
-        View::make('/user/new_course.html');
+        
+        $user_logged_in = self::get_user_logged_in();
+        $user_logged_in->join_course($course_id);
+        Redirect::to('/user/home', array('message' => 'Kurssi on lisätty luetteloosi onnistuneesti!'));
     }
     
-    public static function store_course(){
-        
+    public static function leave_course($course_id){
+        self::check_logged_in();
+        $user_logged_in = self::get_user_logged_in();
+        $user_logged_in->leave_course($course_id);
+        Redirect::to('/user/home', array('message' => 'Kurssi on poistettu luettelostasi!'));
     }
 }

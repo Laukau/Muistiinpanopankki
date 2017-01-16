@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 <div class="alert alert-info">
     {{message}}
 </div>
@@ -10,7 +11,7 @@
             <tr>
                 <th>Nimi</th>
                 <th>Yliopisto</th>
-                <th>Muistiinpanoja</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -19,12 +20,13 @@
             <tr>
                 <td><a href="{{base_path}}/course/{{course.id}}">{{course.title}}</a></td>
                 <td>{{course.university}}</td>
-                <td>9</td>
                 <td><a class="btn btn-default btn-sm" href="{{base_path}}/course/{{course.id}}/edit">Muokkaa</a></td>
+                <td>{{forms.destroy_button("#{base_path}/course/#{course.id}/leave", "Poistu kurssilta")}}</td>
+                
             </tr>
           {% endfor %}
         </tbody>
     </table>
     
-    <div><a href="{{base_path}}/course/new" class="btn btn-success">Lisää kurssi</a><a href="{{base_path}}/user/{{user.id}}/edit" class="btn btn-default">Muokkaa omia tietoja</a></div>
+    <div><a href="{{base_path}}/user/{{user.id}}/edit" class="btn btn-default">Muokkaa omia tietoja</a></div>
 {% endblock %}

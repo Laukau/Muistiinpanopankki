@@ -123,4 +123,17 @@ class User extends BaseModel{
         }*/
         return $errors;
     }
+    
+    public function join_course($course){
+        $query = DB::connection()->prepare('INSERT INTO Students_course (student, course) VALUES (:student, :course) RETURNING id');
+        $query->execute(array('student' => $this->id, 'course' => $course));
+        $row = $query->fetch();
+        $this->id = $row['id'];
+    
+    }
+    
+    public function leave_course($course){
+        $query = DB::connection()->prepare('DELETE FROM Students_course WHERE student = :id AND course = :course');
+        $query->execute(array('id' => $this->id, 'course' => $course));
+    }
 }

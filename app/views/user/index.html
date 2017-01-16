@@ -7,7 +7,6 @@
         <thead>
             <tr>
                 <th>Käyttäjätunnus</th>
-                <th>Muistiinpanoja lisätty</th>
                 <th></th>
             </tr>
         </thead>
@@ -15,7 +14,7 @@
           {% for user in users %}
             <tr>
                 <td><a href="{{base_path}}/user/{{user.id}}">{{user.username}}</a></td>
-                <td>12</td>
+                
             </tr>
           {% endfor %}
         </tbody>
