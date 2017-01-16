@@ -27,8 +27,8 @@ class Course extends BaseModel{
     }
     
     public static function students_all($student_id){
-        $query = DB::connection()->prepare('SELECT * FROM Course JOIN Students_course ON Course.id = Students_course.course JOIN Student ON Students_course.student = Student.id');
-        $query->execute();
+        $query = DB::connection()->prepare('SELECT * FROM Course JOIN Students_course ON Course.id = Students_course.course JOIN Student ON Students_course.student = Student.id WHERE Student.id = :student_id');
+        $query->execute(array('student_id' => $student_id));
         $rows = $query->fetchAll();
         $courses = array();
         
@@ -95,6 +95,7 @@ class Course extends BaseModel{
         }
         return false;
     }
+    
     public function validate_title(){
         $errors = array();
         if(parent::validate_string_required($this->title)){

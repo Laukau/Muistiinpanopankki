@@ -92,9 +92,13 @@ class UserController extends BaseController{
     public static function destroy($id){
         self::check_logged_in();
         $user = new User(array('id' => $id));
+        
+        if($user->student_on_courses()){
+            $user->leave_all_courses();
+        }
         $user->destroy();
         $_SESSION['user'] = null;
-        Redirect::to('/registration', array('message' => 'Tietosi on poistettu palvelusta!'));
+        Redirect::to('/registration', array('message' => 'Kaikki tietosi on poistettu palvelusta!'));
         
     }
     

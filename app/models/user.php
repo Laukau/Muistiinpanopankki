@@ -135,5 +135,23 @@ class User extends BaseModel{
     public function leave_course($course){
         $query = DB::connection()->prepare('DELETE FROM Students_course WHERE student = :id AND course = :course');
         $query->execute(array('id' => $this->id, 'course' => $course));
+        
+    }
+    
+    public function student_on_courses(){
+        $query = DB::connection()->prepare('SELECT * FROM Students_course WHERE student = :student');
+        $query->execute(array('student' => $this->id));
+        $rows = $query->fetchAll();
+        
+        if($rows){
+            return true;
+        }
+        return false;
+    }
+    
+    public function leave_all_courses(){
+        $query = DB::connection()->prepare('DELETE FROM Students_course WHERE student = :id');
+        $query->execute(array('id' => $this->id));
+        
     }
 }
