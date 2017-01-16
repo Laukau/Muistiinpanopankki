@@ -97,7 +97,9 @@ class Note extends BaseModel{
     
     public function validate_address(){
         $errors = array();
-        
+        if(parent::validate_string_required($this->address)){
+            $errors[] = 'Osoite ei saa olla tyhjä!';
+        }
         return $errors;
     }
     
