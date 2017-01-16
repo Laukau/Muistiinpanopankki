@@ -86,6 +86,15 @@ class Course extends BaseModel{
         $query->execute(array('id' => $this->id, 'title' => $this->title, 'university' => $this->university, 'description' => $this->description));
     }
     
+    public function students_on_course(){
+        $query = DB::connection()->prepare('SELECT * FROM Students_course WHERE course = :course');
+        $query->execute(array('course' => $this->id));
+        $row = $query->fetch();
+        if($row){
+            return true;
+        }
+        return false;
+    }
     public function validate_title(){
         $errors = array();
         if(parent::validate_string_required($this->title)){

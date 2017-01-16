@@ -67,8 +67,16 @@ class CourseController extends BaseController {
     
     public static function destroy($id){
         $course = new Course(array('id' => $id));
-        $course->destroy();
         
-        Redirect::to('/course', array('message' => 'Kurssi on poistettu onnistuneesti!'));
+        $errors = array();
+        
+        if($course->students_on_course()) {
+            $errors[] = 'Yritit poistaa kurssia, jolla on opiskelijoita. Jos haluat itse poistua kurssilta, voit tehdä sen omilla sivuillasi.';
+            Redirect::to('/course/' . $id, array('errors' => $errors));
+        }else {
+            $course->destroy();
+            Redirect::to('/course', array('message' => 'Kurssi on poistettu onnistuneesti!'));
+        }
+        
     }
 }
